@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}  {% endblock %}
+
+  {% block content %}
+    {% if text_data  %}
+     
+       <h1 class="text-center text-white mt-4">{{text_data}} </h1>
+    
+    {% else %}
+     <div class="container row gap-3">     
+      {% for tweet in queryset %}
+          <div class="card my-3" style="width: 18rem;">
+              <img src="/media/{{ tweet.photo }}" class="card-img-top" alt="Tweet Photo">
+              <div class="card-body">
+                  <h5 class="card-title">{{ tweet.user.username }}</h5>
+                  <p class="card-text">{{ tweet.text }}</p>
+                  
+                  {% if tweet.user == user %}
+                      <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+                      <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                  {% endif %}
+              </div>
+          </div>
+     {% endfor %}
+      </div>
+                
+    {% endif %}
+    
+  {% endblock %}
